@@ -16,6 +16,7 @@ public class BasicTemplate extends LinearOpMode{
     private DcMotor motorLift;
 
     private Servo armservoRight;
+    private Servo armservoLeft;
 
 
     /*private static double armOpenPos = 0.5;
@@ -29,6 +30,7 @@ public class BasicTemplate extends LinearOpMode{
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         motorRight.setDirection(DcMotor.Direction.FORWARD);
         armservoRight = hardwareMap.servo.get("armServoRight");
+        armservoLeft = hardwareMap.servo.get("armServoLeft");
         double armAdj = 0.1;
         waitForStart();
 
@@ -63,6 +65,15 @@ public class BasicTemplate extends LinearOpMode{
         if (gamepad2.x){
             armAdj = -0.8;
             armservoRight.setPosition(armAdj);
+        }
+
+        if (gamepad2.dpad_right) {
+            armAdj = 0.0;
+            armservoLeft.setPosition(armAdj);
+        }
+        if (gamepad2.dpad_left) {
+            armAdj = 0.0;
+            armservoLeft.setPosition(armAdj);
         }
 
 
