@@ -15,7 +15,7 @@ public class BasicTemplate extends LinearOpMode{
     private DcMotor motorRight;
     private DcMotor motorLift;
 
-    private Servo armservo;
+    private Servo armservoRight;
 
 
     /*private static double armOpenPos = 0.5;
@@ -28,7 +28,7 @@ public class BasicTemplate extends LinearOpMode{
         motorLift = hardwareMap.dcMotor.get("motorLift");
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         motorRight.setDirection(DcMotor.Direction.FORWARD);
-        armservo = hardwareMap.servo.get("armServo");
+        armservoRight = hardwareMap.servo.get("armServoRight");
         double armAdj = 0.1;
         waitForStart();
 
@@ -57,32 +57,32 @@ public class BasicTemplate extends LinearOpMode{
 
         if (gamepad2.b) {
             armAdj = 0.5;
-            armservo.setPosition(armAdj);
+            armservoRight.setPosition(armAdj);
         }
 
         if (gamepad2.x){
             armAdj = -0.8;
-            armservo.setPosition(armAdj);
+            armservoRight.setPosition(armAdj);
         }
 
 
         if (gamepad2.right_bumper = true){
-            //armAdj = armservo.getPosition();
+            //armAdj = armservoRight.getPosition();
             armAdj = armAdj+0.1;
             if (armAdj > 0.5) {
                 armAdj = 0.5;
             }
-            armservo.setPosition(armAdj);
+            armservoRight.setPosition(armAdj);
         }
 
 
         if (gamepad2.left_bumper = true){
-            //armAdj = armservo.getPosition();
+            //armAdj = armservoRight.getPosition();
             armAdj = armAdj-0.1;
             if (armAdj < -0.8) {
                 armAdj = -0.8;
             }
-            armservo.setPosition(armAdj);
+            armservoRight.setPosition(armAdj);
         }
 
 
