@@ -28,15 +28,16 @@ public class BasicTemplate extends LinearOpMode{
     // Gives names to each of the motors in the phone
 
     public void runOpMode() throws InterruptedException{
-        motorLeft = hardwareMap.dcMotor.get("motorLeft");
-        motorRight = hardwareMap.dcMotor.get("motorRight");
+        motorLeft = hardwareMap.dcMotor.get("left_drive");
+        motorRight = hardwareMap.dcMotor.get("right_drive");
         motorLift = hardwareMap.dcMotor.get("motorLift");
         armservoRight = hardwareMap.servo.get("armServoRight");
         armservoLeft = hardwareMap.servo.get("armServoLeft");
         // Sets motors to go forward
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         motorRight.setDirection(DcMotor.Direction.FORWARD);
-
+        armservoRight.setPosition(0.3);
+        armservoLeft.setPosition(0.3);
 
         double armAdj = 0.1;
         waitForStart();
@@ -68,43 +69,47 @@ public class BasicTemplate extends LinearOpMode{
         motorRight.setPower(RMPowr);
         // when each button is pressed the servo will go the set position allowing it to open and close
         if (gamepad2.b) {
-            armAdj = 0.5;
+            armAdj = 0.0;
             armservoRight.setPosition(armAdj);
         }
 
         if (gamepad2.x){
-            armAdj = -0.8;
+            armAdj = 0.5;
             armservoRight.setPosition(armAdj);
         }
 
-        if (gamepad2.dpad_right) {
+        if (gamepad2.b) {
+            armAdj = 0.5;
+            armservoLeft.setPosition(armAdj);
+        }
+        if (gamepad2.x) {
             armAdj = 0.0;
             armservoLeft.setPosition(armAdj);
         }
-        if (gamepad2.dpad_left) {
-            armAdj = 1;
-            armservoLeft.setPosition(armAdj);
-        }
 
 
-        if (gamepad2.right_bumper = true){
-            //armAdj = armservoRight.getPosition();
+        if (gamepad2.right_bumper){
+            armAdj = armservoRight.getPosition();
             armAdj = armAdj+0.1;
-            if (armAdj > 0.5) {
-                armAdj = 0.5;
+            if (armAdj > 1.0) {
+                armAdj = 1.0;
             }
             armservoRight.setPosition(armAdj);
         }
 
 
-        if (gamepad2.left_bumper = true){
-            //armAdj = armservoRight.getPosition();
+        if (gamepad2.left_bumper){
+            armAdj = armservoRight.getPosition();
             armAdj = armAdj-0.1;
-            if (armAdj < -0.8) {
-                armAdj = -0.8;
+            if (armAdj < -1.0) {
+                armAdj = -1.0;
             }
             armservoRight.setPosition(armAdj);
         }
+
+
+            telemetry.addData("armAdj", armAdj);
+//            telemetry.update();
         // Sets the speed and direction of the lift when the corresponding buttons are pressed
         double liftSpeed = 0.0;
             if (gamepad2.y) {
