@@ -28,8 +28,8 @@ public class BasicTemplate extends LinearOpMode{
     // Gives names to each of the motors in the phone
 
     public void runOpMode() throws InterruptedException{
-        motorLeft = hardwareMap.dcMotor.get("left_drive");
-        motorRight = hardwareMap.dcMotor.get("right_drive");
+        motorLeft = hardwareMap.dcMotor.get("motorLeft");
+        motorRight = hardwareMap.dcMotor.get("motorRight");
         motorLift = hardwareMap.dcMotor.get("motorLift");
         armservoRight = hardwareMap.servo.get("armServoRight");
         armservoLeft = hardwareMap.servo.get("armServoLeft");

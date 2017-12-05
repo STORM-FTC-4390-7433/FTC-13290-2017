@@ -53,7 +53,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @Autonomous(name="BasicAutonomous", group="Autonomous")  // @Autonomous(...) is the other common choice
 
-public class BasicAutonomous extends LinearOpMode {
+public class BasicAutonomous extends BasicTemplate {
 
 
    /* Declare OpMode members. */
@@ -64,10 +64,10 @@ public class BasicAutonomous extends LinearOpMode {
     private boolean hardCode = true;
 
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftMotor = null;
-    private DcMotor rightMotor = null;
-    private Servo rightArmServo = null;
-    private Servo leftArmServo = null;
+    private DcMotor motorLeft = null;
+    private DcMotor motorRight = null;
+    private Servo armservoRight = null;
+    private Servo armservoLeft = null;
     //private ColorSensor color_sensor = null;
     //private Servo jewelServo = null;
     //private int programState = 1;
@@ -90,15 +90,15 @@ public class BasicAutonomous extends LinearOpMode {
         * to 'get' must correspond to the names assigned during the robot configuration
         * step (using the FTC Robot Controller app on the phone).
         */
-        leftMotor  = hardwareMap.dcMotor.get("leftMotor");
-        rightMotor = hardwareMap.dcMotor.get("rightMotor");
-        rightArmServo = hardwareMap.servo.get("rightArmServo");
-        leftArmServo = hardwareMap.servo.get("leftArmServo");
+        motorLeft  = hardwareMap.dcMotor.get("motorLeft");
+        motorRight = hardwareMap.dcMotor.get("motorRight");
+        armservoRight = hardwareMap.servo.get("armServoRight");
+        armservoLeft = hardwareMap.servo.get("armServoLeft");
         // color_sensor = hardwareMap.colorSensor.get("color");
-        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // eg: Set the drive motor directions:
         // "Reverse" the motor that runs backwards when connected directly to the battery
@@ -114,8 +114,8 @@ public class BasicAutonomous extends LinearOpMode {
 
         // eg: Set the drive motor directions:
         // Reverse the motor that runs backwards when connected directly to the battery
-        leftMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightMotor.setDirection(DcMotor.Direction.FORWARD);
+        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorRight.setDirection(DcMotor.Direction.FORWARD);
         runtime.reset();
 
 
@@ -131,12 +131,12 @@ public class BasicAutonomous extends LinearOpMode {
             rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             //color_sensor.red();
             //color_sensor.blue();
-            leftArmServo.setPosition(.3);
-            rightArmServo.setPosition(.3);
+            armservoLeft.setPosition(.3);
+            armservoRight.setPosition(.3);
             sleep(1000);
 
-            leftMotor.setTargetPosition(-3000);
-            rightMotor.setTargetPosition(-3000);
+            motorLeft.setTargetPosition(-3000);
+            motorRight.setTargetPosition(-3000);
 
             int leftPosition = leftMotor.getCurrentPosition();
             telemetry.addData("Encoder Position", leftPosition);
@@ -144,7 +144,7 @@ public class BasicAutonomous extends LinearOpMode {
             telemetry.addData("Encoder Position", rightPosition);
 
             telemetry.update();
-            leftMotor.setPower(.9);
+            motorLeft.setPower(.9);
             rightMotor.setPower(.4);
 
             while(leftMotor.isBusy() && rightMotor.isBusy() && opModeIsActive()) {
