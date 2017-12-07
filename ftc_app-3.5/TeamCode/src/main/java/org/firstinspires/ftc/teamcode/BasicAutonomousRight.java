@@ -2,7 +2,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -51,9 +50,9 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="BasicAutonomous", group="Autonomous")  // @Autonomous(...) is the other common choice
+@Autonomous(name="BasicAutonomousRight", group="Autonomous")  // @Autonomous(...) is the other common choice
 
-public class BasicAutonomous extends BasicTemplate {
+public class BasicAutonomousRight extends BasicTemplate {
 
 
    /* Declare OpMode members. */
@@ -154,10 +153,32 @@ public class BasicAutonomous extends BasicTemplate {
                 telemetry.addData("Right Encoder Position", rightPosition);
                 telemetry.update();
             }
+            motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            motorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+            motorLeft.setTargetPosition(-950);
+            motorRight.setTargetPosition(950);
+
+            motorLeft.setPower(.3);
+            motorRight.setPower(.275);
+            while(motorLeft.isBusy() && motorRight.isBusy() && opModeIsActive()) {
+                leftPosition = motorLeft.getCurrentPosition();
+                telemetry.addData("Left Encoder Position", leftPosition);
+                rightPosition = motorRight.getCurrentPosition();
+                telemetry.addData("Right Encoder Position", rightPosition);
+                telemetry.update();
+            }
             motorLeft.setPower(0);
             motorRight.setPower(0);
-            sleep(5000);
+            telemetry.addData("Encoder Position", leftPosition);
+            telemetry.addData("Encoder Position", rightPosition);
+            telemetry.update();
+
+
+
+
 
             // sleep(5000);
          /*   rightArmServo.setPosition(.7);
