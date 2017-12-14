@@ -132,7 +132,7 @@ public class BasicAutonomous extends BasicTemplate {
             //color_sensor.red();
             //color_sensor.blue();
             armservoLeft.setPosition(.5);
-            armservoRight.setPosition(.0);
+            armservoRight.setPosition(.5);
             sleep(1000);
 
             motorLeft.setTargetPosition(1000);

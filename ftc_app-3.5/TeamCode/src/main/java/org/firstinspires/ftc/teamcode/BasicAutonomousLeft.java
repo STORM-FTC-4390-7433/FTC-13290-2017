@@ -49,36 +49,20 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-
+// gives the program a name
 @Autonomous(name="BasicAutonomousLeft", group="Autonomous")  // @Autonomous(...) is the other common choice
 
 public class BasicAutonomousLeft extends BasicTemplate {
 
 
-   /* Declare OpMode members. */
-
-
-//ColorSensor color_sensor;
-
-    private boolean hardCode = true;
+   // Declares the motors and servos
 
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor motorLeft = null;
     private DcMotor motorRight = null;
+    private DcMotor motorLift = null;
     private Servo armservoRight = null;
     private Servo armservoLeft = null;
-    //private ColorSensor color_sensor = null;
-    //private Servo jewelServo = null;
-    //private int programState = 1;
-
- /* static final double     COUNTS_PER_MOTOR_REV    = 1368 ;    // eg: TETRIX Motor Encoder
-  static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
-  static final double     WHEEL_DIAMETER_INCHES   = 3.8 ;     // For figuring circumference
-  static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-          (WHEEL_DIAMETER_INCHES * 3.1415);
-          */
-    //static final double     DRIVE_SPEED             = 4.6;
-    //static final double     TURN_SPEED              = 1.5;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -93,6 +77,7 @@ public class BasicAutonomousLeft extends BasicTemplate {
         motorRight = hardwareMap.dcMotor.get("motorRight");
         armservoRight = hardwareMap.servo.get("armServoRight");
         armservoLeft = hardwareMap.servo.get("armServoLeft");
+        motorLift = hardwareMap.dcMotor.get("motorLift");
         // color_sensor = hardwareMap.colorSensor.get("color");
         motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -124,16 +109,20 @@ public class BasicAutonomousLeft extends BasicTemplate {
             // telemetry.update();
            /*shooterLeft.setPower(0.37);
            shooterRight.setPower(0.37);*/
+
             motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             motorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             //color_sensor.red();
             //color_sensor.blue();
-            armservoLeft.setPosition(.5);
-            armservoRight.setPosition(.0);
+            armservoLeft.setPosition(0.5);
+            armservoRight.setPosition(0.0);
             sleep(1000);
 
+            motorLift.setPower(.8);
+            sleep(1000);
+            motorLift.setPower(0);
             motorLeft.setTargetPosition(1000);
             motorRight.setTargetPosition(1000);
 
@@ -141,10 +130,11 @@ public class BasicAutonomousLeft extends BasicTemplate {
             telemetry.addData("Encoder Position", leftPosition);
             int rightPosition = motorRight.getCurrentPosition();
             telemetry.addData("Encoder Position", rightPosition);
-
             telemetry.update();
+            sleep(2000);
             motorLeft.setPower(.3);
             motorRight.setPower(.275);
+
 
             while(motorLeft.isBusy() && motorRight.isBusy() && opModeIsActive()) {
                 leftPosition = motorLeft.getCurrentPosition();
@@ -158,8 +148,8 @@ public class BasicAutonomousLeft extends BasicTemplate {
             motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             motorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            motorLeft.setTargetPosition(1300);
-            motorRight.setTargetPosition(-1300);
+            motorLeft.setTargetPosition(1700);
+            motorRight.setTargetPosition(-1700);
 
             motorLeft.setPower(.3);
             motorRight.setPower(.275);
@@ -175,6 +165,10 @@ public class BasicAutonomousLeft extends BasicTemplate {
             telemetry.addData("Encoder Position", leftPosition);
             telemetry.addData("Encoder Position", rightPosition);
             telemetry.update();
+            sleep(1000);
+            armservoLeft.setPosition(0.0);
+            armservoRight.setPosition(0.5);
+
 
 
             // sleep(5000);
